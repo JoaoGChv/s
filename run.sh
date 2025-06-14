@@ -10,6 +10,8 @@ docker run \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v "$(pwd)/app.py":/app/app.py:ro \
   -v "$(pwd)/dataset":/app/dataset:ro \
+  -v "$(pwd)/gui":/app/gui:ro \
+  -v "$(pwd)/utils":/app/utils:ro \
   -w /app \
   pytorch-tkinter-app
 
