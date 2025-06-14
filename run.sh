@@ -5,7 +5,6 @@ set -e
 
 echo "Iniciando o container pytorch-tkinter-app"
 docker run \
-  --gpus all \
   --rm \
   -e DISPLAY=${DISPLAY} \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
