@@ -8,7 +8,6 @@ HOST_IP=$(grep nameserver /etc/resolv.conf | awk '{print $2}')
 export DISPLAY=${HOST_IP}:0
 
 docker run \
-  --gpus all \
   --rm \
   -e DISPLAY=${DISPLAY} \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
