@@ -82,3 +82,20 @@ class AnnotationStore:
         """Grava o YAML atualizado em ``self.path``."""
         with open(self.path, "w", encoding="utf-8") as f:
             yaml.dump(self.data, f, allow_unicode=True)
+    
+    def add_class(self, cls: str) -> str:
+        """Adiciona uma nova classe à paleta de cores e retorna a cor gerada."""
+        if cls in self.color_map:
+            return self.color_map[cls]
+
+        idx = len(self.color_map)
+        if idx < len(self._BASE_COLORS):
+            color = self._BASE_COLORS[idx]
+        else:
+            h = ((idx - len(self._BASE_COLORS)) * 0.12) % 1.0
+            r, g, b = (int(c * 255) for c in colorsys.hsv_to_rgb(h, 0.85, 0.95))
+            color = f"#{r:02x}{g:02x}{b:02x}"
+
+        self.color_map[cls] = color
+        return color
+

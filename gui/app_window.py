@@ -34,7 +34,8 @@ class App(tk.Tk):
         self.toolbar = ToolBar(self, classes,
                                self._change_mode,
                                self._change_class,
-                               self._save_annotations)
+                               self._save_annotations,
+                               self._add_class)
         self.toolbar.pack(side=tk.TOP, fill=tk.X)
 
         self.sidebar = Sidebar(self, self.images, self._on_select)
@@ -65,11 +66,17 @@ class App(tk.Tk):
         if cls:
             self.viewer.set_class(cls)
         self.current_class = cls
+    
+    def _add_class(self, cls: str):
+        self.annos.add_class(cls)
+        self.toolbar.add_class(cls)
+        self._change_class(cls)
 
     def _new_annotation(self, anno: dict):
         if not self.current_file:
             return
         self.annos.add_annotation(self.current_file, anno)
+        self.annos.save()
         self.toolbar.enable_save(True)
         # atualiza visualização para incluir nova anotação
         self._on_select(self.current_file)
