@@ -5,11 +5,6 @@ import yaml
 import colorsys
 
 class AnnotationStore:
-    """
-    Lê (ou cria) annotations.yaml e gera:
-        • self.data ......  dicionário completo
-        • self.color_map .. dict {classe: cor}
-    """
     _BASE_COLORS = [
         "red", "blue", "orange", "green", "magenta",
         "cyan", "yellow", "purple", "brown", "pink",
@@ -71,3 +66,19 @@ class AnnotationStore:
     def annos_for(self, fname: str) -> list[dict]:
         """Anotações da imagem (lista vazia se não houver)."""
         return self.data.get("images", {}).get(fname, {}).get("annotations", [])
+    
+    def add_annotation(self, filename: str, annotation_dict: Dict[str, Any]):
+        """Adiciona uma anotação a uma imagem."""
+        imgs = self.data.setdefault(filename, {})
+        record = imgs.setdefault("annotations", [])
+        annos = record.setdefault("annotations", [])
+        annos.append(annotation_dict)
+
+        ann_type = annotation_dict.get("type")
+        if ann_type and (ann_type not in self.color_map or "color" in annotation_dict):
+            self._build_color_map
+
+    def save(self):
+        """Grava o YAML atualizado em ``self.path``."""
+        with open(self.path, "w", encoding="utf-8") as f:
+            yaml.dump(self.data, f, allow_unicode=True)
