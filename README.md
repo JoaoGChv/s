@@ -23,3 +23,16 @@ O diretório indicado em `DATASET_PATH` deve conter pelo menos as pastas
 `Segmentations/`, ela será ignorada pela aplicação.
 
 O dataset será montado dentro do contêiner em `/app/dataset`.
+
+## Treinamento
+
+Scripts de treinamento independentes estão disponíveis em `training/`.
+
+### YOLOe
+```bash
+python3 training/train_yoloe.py /caminho/para/dataset --epochs 100 --batch 16
+```
+
+### GroundingDINO
+```bash
+python3 training/train_groundingdino.py /caminho/para/dataset --config config.py
