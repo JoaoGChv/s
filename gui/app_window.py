@@ -45,18 +45,6 @@ class App(tk.Tk):
         self.sidebar.select_first()
         self._on_select(self.images[0])
 
-    # ------------------------------------------------------------------
-    def _on_select(self, filename: str):
-        self.current_file = filename
-        img_path = IMAGES_DIR / filename
-        pil_img = Image.open(img_path).convert("RGB")
-        tipos_presentes = draw_annotations(
-            pil_img,
-            self.annos.annos_for(filename),
-            self.annos.color_map,
-        )
-        self.viewer.show_image(pil_img, tipos_presentes, self.annos.color_map)
-
     def _change_mode(self, mode: str):
         self.viewer.set_mode(mode)
 

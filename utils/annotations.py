@@ -69,14 +69,14 @@ class AnnotationStore:
     
     def add_annotation(self, filename: str, annotation_dict: Dict[str, Any]):
         """Adiciona uma anotação a uma imagem."""
-        imgs = self.data.setdefault(filename, {})
-        record = imgs.setdefault("annotations", [])
+        imgs = self.data.setdefault("images", {})
+        record = imgs.setdefault(filename, {})
         annos = record.setdefault("annotations", [])
         annos.append(annotation_dict)
 
         ann_type = annotation_dict.get("type")
         if ann_type and (ann_type not in self.color_map or "color" in annotation_dict):
-            self._build_color_map
+            self._build_color_map()
 
     def save(self):
         """Grava o YAML atualizado em ``self.path``."""
