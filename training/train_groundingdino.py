@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+'''#!/usr/bin/env python3
 import argparse
 from pathlib import Path
 
@@ -17,15 +17,21 @@ def main() -> None:
     if not args.dataset.exists():
         raise SystemExit(f"Dataset path {args.dataset} does not exist")
 
-    # Placeholder: integrate with GroundingDINO training routine.
-    # from groundingdino.engine import Trainer
-    # trainer = Trainer(args.config, data_path=args.dataset, epochs=args.epochs, lr=args.lr)
-    # trainer.train()
+    if args.config is None or not args.config.exists():
+        raise SystemExit("--config must point to a valid GroundingDINO config file")
 
-    print("[Placeholder] Training GroundingDINO with parameters:")
-    for k, v in vars(args).items():
-        print(f"  {k}: {v}")
+    from groundingdino.engine import Trainer
+
+    trainer = Trainer(
+        config_path=str(args.config),
+        data_path=str(args.dataset),
+        epochs=args.epochs,
+        lr=args.lr,
+    )
+    trainer.train()
 
 
 if __name__ == "__main__":
     main()
+
+'''

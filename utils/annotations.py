@@ -81,7 +81,7 @@ class AnnotationStore:
     def save(self):
         """Grava o YAML atualizado em ``self.path``."""
         with open(self.path, "w", encoding="utf-8") as f:
-            yaml.dump(self.data, f, allow_unicode=True)
+            yaml.dump(self.data, f, allow_unicode=True, Dumper=yaml.SafeDumper)
     
     def add_class(self, cls: str) -> str:
         """Adiciona uma nova classe à paleta de cores e retorna a cor gerada."""

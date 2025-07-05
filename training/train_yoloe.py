@@ -18,15 +18,20 @@ def main() -> None:
     if not args.dataset.exists():
         raise SystemExit(f"Dataset path {args.dataset} does not exist")
 
-    # Placeholder: integrate with Ultralytics YOLO training API.
-    # from ultralytics import YOLO
-    # model = YOLO('yolov8e.yaml')
-    # data_config = {...}
-    # model.train(data=data_config, epochs=args.epochs, batch=args.batch)
+    dataset_yaml = args.dataset / "data.yaml"
+    if not dataset_yaml.exists():
+        raise SystemExit(f"Dataset config {dataset_yaml} does not exist")
 
-    print("[Placeholder] Training YOLOe with parameters:")
-    for k, v in vars(args).items():
-        print(f"  {k}: {v}")
+    from ultralytics import YOLO
+
+    model = YOLO("yolov8e.yaml")
+    model.train(
+        data=str(dataset_yaml),
+        epochs=args.epochs,
+        batch=args.batch,
+        imgsz=args.img_size,
+        lr0=args.lr,
+    )
 
 
 if __name__ == "__main__":

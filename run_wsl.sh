@@ -16,7 +16,7 @@ docker run \
   -e DISPLAY=${DISPLAY} \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v "$(pwd)/app.py":/app/app.py:ro \
-  -v "${DATASET_PATH}":/app/dataset:ro \
+  -v "${DATASET_PATH}":/app/dataset \
   -v "$(pwd)/gui":/app/gui:ro \
   -v "$(pwd)/utils":/app/utils:ro \
   -w /app \
